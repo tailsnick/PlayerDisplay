@@ -36,10 +36,29 @@ namespace PlayerDisplay
             Console.ReadLine();
 
 
-            private static void PrintName(PlayerModel p1)
-            {
-                Console.WriteLine($"Player: {p1.Name}");
-            }
+            
+        }
+
+        private static void PrintId(PlayerModel p1)
+        {
+            Console.WriteLine($"Player ID: {p1.Id}");
+        }
+
+        private static void PrintName(PlayerModel p1)
+        {
+            Console.WriteLine($"Player Name: {p1.Name}");
+        }
+
+        private static void PrintEmail(PlayerModel p1)
+        {
+            Console.WriteLine($"Player Email: {p1.Email}");
+        }
+
+        private static void PrintAll(PlayerModel p1)
+        {
+            Console.WriteLine($"Player Name: {p1.Name}");
+            Console.WriteLine($"Player ID: {p1.Id}");
+            Console.WriteLine($"Player Email: {p1.Email}");
         }
     }
 }
