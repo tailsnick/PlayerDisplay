@@ -1,4 +1,10 @@
-﻿using System.Text.RegularExpressions;
+﻿/*
+ * Author Name: Rachel Hoffman
+ * Date: 5/19/22
+ * 
+ * Summary: Collects player information from user.
+*/
+using System.Text.RegularExpressions;
 namespace PlayerDisplay
 {
     public class Program
@@ -19,12 +25,12 @@ namespace PlayerDisplay
             }
             Console.WriteLine("");
 
+
             //Create new player models
             string userEmail = "";
             string userName = "";
             string pattern = @"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$";
             PlayerModel[] playerArray = new PlayerModel[pNum];
-            PlayerModel pm;
 
             for (int i = 0; i < pNum; i++)
             {
@@ -36,12 +42,15 @@ namespace PlayerDisplay
                 userEmail = Console.ReadLine();
                 Console.WriteLine("");
 
+
                 //check email validation
                 while (!Regex.IsMatch(userEmail, pattern))
                 {
                     Console.WriteLine("Invald input, please enter valid email address.");
                     userEmail = Console.ReadLine();
                 }
+
+
                 playerArray[i] = new PlayerModel();
                 playerArray[i].Name = userName;
                 playerArray[i].Email = userEmail;
