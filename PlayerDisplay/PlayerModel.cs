@@ -4,11 +4,6 @@
  * 
  * Summary: A player model class that allows different methods for Printing information.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlayerDisplay
 {
@@ -19,7 +14,7 @@ namespace PlayerDisplay
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public delegate void PrintPlayerInfo(PlayerModel model);
+        public delegate void PrintPlayerInfo(PlayerModel p);
 
 
         /// <summary>
@@ -27,9 +22,9 @@ namespace PlayerDisplay
         /// </summary>
         /// <param name="PrintPlayer"></param>
         /// <param name="player"></param>
-        public void Print(PrintPlayerInfo PrintPlayer, PlayerModel player)
+        public void Print(PrintPlayerInfo printPlayer, PlayerModel player)
         {
-            Print(PrintPlayer, player);
+            printPlayer(player);
         }
     }
 }

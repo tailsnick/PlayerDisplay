@@ -9,56 +9,71 @@ namespace PlayerDisplay
             Console.WriteLine("How many players are playing?");
 
             int pNum = 0;
-            string userInput = Console.ReadLine();
+            string userNum = "";
+            userNum = Console.ReadLine();
 
-            while (!int.TryParse(userInput, out pNum))
+            while (!int.TryParse(userNum, out pNum))
             {
                 Console.WriteLine("Invald input, please enter a number.");
-                userInput = Console.ReadLine();
-            }
-
-            //Create new player models
-            string pattern = @"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$";
-            List<PlayerModel> list = new List<PlayerModel>();
-
-            for(int i = 0; i < pNum; i++)
-            {
-                userInput = Console.ReadLine();
-
-                //check email validation
-                //while ()
-                //{
-                //    Console.WriteLine("Invald input, please enter a number.");
-                //    userInput = Console.ReadLine();
-                //}
+                userNum = Console.ReadLine();
             }
             Console.WriteLine("");
-            Console.ReadLine();
 
+            //Create new player models
+            string userEmail = "";
+            string userName = "";
+            string pattern = @"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$";
+            PlayerModel[] playerArray = new PlayerModel[pNum];
+            PlayerModel pm;
 
-            
+            for (int i = 0; i < pNum; i++)
+            {
+                Console.WriteLine($"Please enter player {i+1} name:");
+                userName = Console.ReadLine();
+                Console.WriteLine("");
+
+                Console.WriteLine("Please enter player email:");
+                userEmail = Console.ReadLine();
+                Console.WriteLine("");
+
+                //check email validation
+                while (!Regex.IsMatch(userEmail, pattern))
+                {
+                    Console.WriteLine("Invald input, please enter valid email address.");
+                    userEmail = Console.ReadLine();
+                }
+                playerArray[i] = new PlayerModel();
+                playerArray[i].Name = userName;
+                playerArray[i].Email = userEmail;
+            }
+
+            for (int i = 0; i < pNum; i++)
+            {
+                Console.WriteLine((i+1)+":");
+                playerArray[i].Print(PrintPlayerAll, playerArray[i]);
+            }
+
+            Console.ReadKey();
         }
 
-        private static void PrintId(PlayerModel p1)
-        {
-            Console.WriteLine($"Player ID: {p1.Id}");
-        }
 
-        private static void PrintName(PlayerModel p1)
+        private static void PrintPlayerName(PlayerModel p1)
         {
-            Console.WriteLine($"Player Name: {p1.Name}");
+            Console.WriteLine("Player Name: "+ p1.Name +"\n");
         }
-
-        private static void PrintEmail(PlayerModel p1)
+        private static void PrintPlayerId(PlayerModel p1)
         {
-            Console.WriteLine($"Player Email: {p1.Email}");
+            Console.WriteLine("Player ID: "+ p1.Id +"\n");
         }
-
-        private static void PrintAll(PlayerModel p1)
+        private static void PrintPlayerEmail(PlayerModel p1)
         {
-            Console.WriteLine($"Player Name: {p1.Name}");
-            Console.WriteLine($"Player ID: {p1.Id}");
-            Console.WriteLine($"Player Email: {p1.Email}");
+            Console.WriteLine("Player Email: " + p1.Email + "\n");
+        }
+        private static void PrintPlayerAll(PlayerModel p1)
+        {
+            Console.WriteLine("Player Name: " + p1.Name);
+            Console.WriteLine("Player ID: " + p1.Id);
+            Console.WriteLine("Player Email: " + p1.Email + "\n");
         }
     }
 }
