@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerDisplay", "PlayerDisplay\PlayerDisplay.csproj", "{DC4A1C03-5D1F-4923-BD90-DA1CBF8AA21E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC4A1C03-5D1F-4923-BD90-DA1CBF8AA21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC4A1C03-5D1F-4923-BD90-DA1CBF8AA21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC4A1C03-5D1F-4923-BD90-DA1CBF8AA21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC4A1C03-5D1F-4923-BD90-DA1CBF8AA21E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFC1861A-DB5F-4432-B52D-FA3FF6D59119}
+	EndGlobalSection
+EndGlobal
