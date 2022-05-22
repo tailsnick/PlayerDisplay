@@ -18,6 +18,7 @@ namespace PlayerDisplay
             string userNum = "";
             userNum = Console.ReadLine();
 
+            //error check for user input
             while (!int.TryParse(userNum, out pNum))
             {
                 Console.WriteLine("Invald input, please enter a number.");
@@ -56,13 +57,114 @@ namespace PlayerDisplay
                 playerArray[i].Email = userEmail;
             }
 
-            for (int i = 0; i < pNum; i++)
+            
+
+
+            Console.WriteLine("\nPress any key to continue!");
+            Console.ReadKey();
+
+            UserPicksOption(pNum, playerArray);
+
+            while(true)
             {
-                Console.WriteLine((i+1)+":");
-                playerArray[i].Print(PrintPlayerAll, playerArray[i]);
+                Console.WriteLine("\nDo you want a to look at another option? y or n");
+                string userAnswer = Console.ReadLine();
+
+                while (userAnswer != "y" && userAnswer != "n")
+                {
+                    Console.WriteLine("Invald input, please enter y or n.");
+                    userNum = Console.ReadLine();
+                }
+
+                if (userAnswer == "y")
+                {
+                    UserPicksOption(pNum, playerArray);
+                }
+                else if (userAnswer == "n")
+                {
+                    Console.WriteLine("\nGoodbye");
+                    break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Allow user to pick from options and display them to user.
+        /// </summary>
+        /// <param name="pNum"></param>
+        /// <param name="playerArray"></param>
+        private static void UserPicksOption(int pNum, PlayerModel[] playerArray)
+        {
+            Console.Clear();
+            Console.WriteLine("Please choose an option:\n" +
+                "\n1. Print players names\n" +
+                "2. Print all players IDs\n" +
+                "3. Print all players emails\n" +
+                "4. Print all players information\n" +
+                "5. Cutie option?\n" +
+                "\nWhich option do you wanna pick?");
+
+            //reusing this string
+            string userSel = Console.ReadLine();
+            int selectNum;
+
+            //error check for user input
+            while (!int.TryParse(userSel, out selectNum))
+            {
+                Console.Clear();
+                Console.WriteLine("Invald input, please enter a number.\n");
+                Console.WriteLine("Please choose an option:\n" +
+                "\n1. Print players names\n" +
+                "2. Print all players IDs\n" +
+                "3. Print all players emails\n" +
+                "4. Print all players information\n" +
+                "5. Cutie option?\n" +
+                "\nWhich option do you wanna pick?");
+
+                userSel = Console.ReadLine();
             }
 
-            Console.ReadKey();
+            Console.WriteLine("");
+
+            switch (selectNum)
+            {
+                case 1:
+                    for (int i = 0; i < pNum; i++)
+                    {
+                        Console.WriteLine((i + 1) + ":");
+                        playerArray[i].Print(PrintPlayerName, playerArray[i]);
+                    }
+                    break;
+
+                case 2:
+                    for (int i = 0; i < pNum; i++)
+                    {
+                        Console.WriteLine((i + 1) + ":");
+                        playerArray[i].Print(PrintPlayerId, playerArray[i]);
+                    }
+                    break;
+
+                case 3:
+                    for (int i = 0; i < pNum; i++)
+                    {
+                        Console.WriteLine((i + 1) + ":");
+                        playerArray[i].Print(PrintPlayerEmail, playerArray[i]);
+                    }
+                    break;
+
+                case 4:
+                    for (int i = 0; i < pNum; i++)
+                    {
+                        Console.WriteLine((i + 1) + ":");
+                        playerArray[i].Print(PrintPlayerAll, playerArray[i]);
+                    }
+                    break;
+
+                case 5:
+                    Console.WriteLine("You are a cutie! I hope you have a good day! ^-^");
+                    break;
+            }
         }
 
 
