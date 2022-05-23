@@ -7,14 +7,25 @@
 
 namespace PlayerDisplay
 {
-    public class PlayerModel: IPlayerModel
+    public abstract class PlayerModel: IPlayerModel
     {
-        private readonly Guid _id = Guid.NewGuid();
-        public Guid Id { get { return _id; } }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        private Guid _id;
+        private int _level;
+
+        //constroctor
+        public PlayerModel()
+        {
+            _id = Guid.NewGuid();
+            _level = 1;
+        }
+
+        public Guid Id { get { return _id; } set { _id = value; } }
+        public virtual string Name { get; set; }
+        public virtual string Email { get; set; }
+        public int Level { get { return _level; } set { _level = value; } }
 
         public delegate void PrintPlayerInfo(PlayerModel p);
+
 
 
         /// <summary>
@@ -26,5 +37,7 @@ namespace PlayerDisplay
         {
             printPlayer(player);
         }
+
+        public abstract void LevelChange(int lc);
     }
 }

@@ -1,18 +1,24 @@
 ﻿/*
  * Author Name: Rachel Hoffman
- * Date: 5/19/22
+ * Date: 5/23/22
  * 
- * Summary: Collects player information from user.
+ * Summary: Collects player information from user and adds bots to game.
 */
+
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 namespace PlayerDisplay
 {
     public class Program
     {
+        static Player player1 = new Player();
+        static List<Bot> bots = new List<Bot>();
         static void Main(string[] args)
         {
-            //Player Count
-            Console.WriteLine("How many players are playing?");
+            //Player Information
+            Console.WriteLine("Would you like to...\n" +
+                "1. Create new Player\n" +
+                "2. Load Player from file");
 
             int pNum = 0;
             string userNum = "";
@@ -24,18 +30,80 @@ namespace PlayerDisplay
                 Console.WriteLine("Invald input, please enter a number.");
                 userNum = Console.ReadLine();
             }
+
             Console.WriteLine("");
 
+            switch(pNum)
+            {
+                case 1:
+                    Console.Clear();
+                    NewPlayer();
+                    Console.Clear();
+                    break;
+                case 2:
+                    Console.Clear();
+                    LoadPlayer();
+                    break;
+            }
 
+
+            //Adding Bots
+            Console.WriteLine("How many bots would you like? (Min 1, Max 7)");
+            pNum = 0;
+            userNum = Console.ReadLine();
+
+            //error check for user input
+            while (!int.TryParse(userNum, out pNum) || ((7 < pNum) || (pNum < 1)) ) //NEED To Test this
+            {
+                Console.WriteLine("\nInvald input, please enter a number. (Min 1, Max 7)");
+                userNum = Console.ReadLine();
+            }
+
+            AddBots(pNum);
+
+
+            //Console.WriteLine("\nPress any key to continue!");
+            //Console.ReadKey();
+
+
+            //User picks options or leaves
+            UserPicksOption();
+
+            while(true)
+            {
+                Console.WriteLine("\nDo you want a to look at another option? y or n");
+                string userAnswer = Console.ReadLine();
+
+                while (userAnswer != "y" && userAnswer != "n")
+                {
+                    Console.WriteLine("Invald input, please enter y or n.");
+                    userNum = Console.ReadLine();
+                }
+
+                if (userAnswer == "y")
+                {
+                    UserPicksOption();
+                }
+                else if (userAnswer == "n")
+                {
+                    Console.WriteLine("\nGoodbye");
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create new Player
+        /// </summary>
+        public static void NewPlayer()
+        {
             //Create new player models
             string userEmail = "";
             string userName = "";
             string pattern = @"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$";
-            PlayerModel[] playerArray = new PlayerModel[pNum];
 
-            for (int i = 0; i < pNum; i++)
-            {
-                Console.WriteLine($"Please enter player {i+1} name:");
+           
+                Console.WriteLine($"Please enter player name:");
                 userName = Console.ReadLine();
                 Console.WriteLine("");
 
@@ -52,57 +120,48 @@ namespace PlayerDisplay
                 }
 
 
-                playerArray[i] = new PlayerModel();
-                playerArray[i].Name = userName;
-                playerArray[i].Email = userEmail;
-            }
-
-            
-
-
-            Console.WriteLine("\nPress any key to continue!");
-            Console.ReadKey();
-
-            UserPicksOption(pNum, playerArray);
-
-            while(true)
+            player1 = new Player()
             {
-                Console.WriteLine("\nDo you want a to look at another option? y or n");
-                string userAnswer = Console.ReadLine();
-
-                while (userAnswer != "y" && userAnswer != "n")
-                {
-                    Console.WriteLine("Invald input, please enter y or n.");
-                    userNum = Console.ReadLine();
-                }
-
-                if (userAnswer == "y")
-                {
-                    UserPicksOption(pNum, playerArray);
-                }
-                else if (userAnswer == "n")
-                {
-                    Console.WriteLine("\nGoodbye");
-                    break;
-                }
-            }
+                Name = userName,
+                Email = userEmail,
+                Level = 1
+            };
         }
 
+        /// <summary>
+        /// Save player info to file
+        /// </summary>
+        /// <param name="p"></param>
+        public static void SavePlayer()
+        {
+
+        }
+
+        /// <summary>
+        /// Load player info to file
+        /// </summary>
+        /// <param name="p"></param>
+        public static void LoadPlayer()
+        {
+
+        }
 
         /// <summary>
         /// Allow user to pick from options and display them to user.
         /// </summary>
         /// <param name="pNum"></param>
         /// <param name="playerArray"></param>
-        private static void UserPicksOption(int pNum, PlayerModel[] playerArray)
+        public static void UserPicksOption()
         {
             Console.Clear();
             Console.WriteLine("Please choose an option:\n" +
-                "\n1. Print players names\n" +
-                "2. Print all players IDs\n" +
-                "3. Print all players emails\n" +
-                "4. Print all players information\n" +
-                "5. Cutie option?\n" +
+                "\n1. Print player name\n" +
+                "2. Print player ID\n" +
+                "3. Print player email\n" +
+                "3. Print player level\n" +
+                "5. Print player information\n" +
+                "6. Cutie option?\n" +
+                "7. Print Bots Information\n" +
                 "\nWhich option do you wanna pick?");
 
             //reusing this string
@@ -115,11 +174,13 @@ namespace PlayerDisplay
                 Console.Clear();
                 Console.WriteLine("Invald input, please enter a number.\n");
                 Console.WriteLine("Please choose an option:\n" +
-                "\n1. Print players names\n" +
-                "2. Print all players IDs\n" +
-                "3. Print all players emails\n" +
-                "4. Print all players information\n" +
-                "5. Cutie option?\n" +
+                "\n1. Print player name\n" +
+                "2. Print player ID\n" +
+                "3. Print player email\n" +
+                "3. Print player level\n" +
+                "5. Print player information\n" +
+                "6. Cutie option?\n" +
+                "7. Print Bots Information\n" +
                 "\nWhich option do you wanna pick?");
 
                 userSel = Console.ReadLine();
@@ -130,61 +191,45 @@ namespace PlayerDisplay
             switch (selectNum)
             {
                 case 1:
-                    for (int i = 0; i < pNum; i++)
-                    {
-                        Console.WriteLine((i + 1) + ":");
-                        playerArray[i].Print(PrintPlayerName, playerArray[i]);
-                    }
+                    player1.PrintPlayerName();
                     break;
 
                 case 2:
-                    for (int i = 0; i < pNum; i++)
-                    {
-                        Console.WriteLine((i + 1) + ":");
-                        playerArray[i].Print(PrintPlayerId, playerArray[i]);
-                    }
+                    player1.PrintPlayerId();
                     break;
 
                 case 3:
-                    for (int i = 0; i < pNum; i++)
-                    {
-                        Console.WriteLine((i + 1) + ":");
-                        playerArray[i].Print(PrintPlayerEmail, playerArray[i]);
-                    }
+                    player1.PrintPlayerEmail();
                     break;
 
                 case 4:
-                    for (int i = 0; i < pNum; i++)
-                    {
-                        Console.WriteLine((i + 1) + ":");
-                        playerArray[i].Print(PrintPlayerAll, playerArray[i]);
-                    }
+                    player1.PrintPlayerLevel();
                     break;
-
                 case 5:
+                    player1.PrintPlayerAll();
+                    break;
+                case 6:
                     Console.WriteLine("You are a cutie! I hope you have a good day! ^-^");
                     break;
+                case 7:
+                    break;
             }
+
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
         }
 
 
-        private static void PrintPlayerName(PlayerModel p1)
+        /// <summary>
+        /// Create and add bots to list.
+        /// </summary>
+        /// <param name="num"></param>
+        public static void AddBots(int num)
         {
-            Console.WriteLine("Player Name: "+ p1.Name +"\n");
-        }
-        private static void PrintPlayerId(PlayerModel p1)
-        {
-            Console.WriteLine("Player ID: "+ p1.Id +"\n");
-        }
-        private static void PrintPlayerEmail(PlayerModel p1)
-        {
-            Console.WriteLine("Player Email: " + p1.Email + "\n");
-        }
-        private static void PrintPlayerAll(PlayerModel p1)
-        {
-            Console.WriteLine("Player Name: " + p1.Name);
-            Console.WriteLine("Player ID: " + p1.Id);
-            Console.WriteLine("Player Email: " + p1.Email + "\n");
+            for (int i = 0; i < num; i++)
+            {
+                bots.Add(new Bot());
+            }
         }
     }
 }
